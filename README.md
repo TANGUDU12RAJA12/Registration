@@ -1,100 +1,214 @@
-# Registration & Login Console Application (.NET Framework)
+🔐 Registration & Login System with OTP APIs (.NET Framework)
+📌 Project Overview
 
-## 📌 Project Overview
+This project is a Registration and Login System developed using C# (.NET Framework).
+It initially started as a console-based authentication application and was later enhanced with Web APIs for OTP generation and verification.
 
-This project is a **console-based Registration and Login system** built using **C# (.NET Framework)** with **SQL Server (LocalDB)** as the database. It demonstrates core backend concepts such as **user authentication, password hashing, OTP-based password reset, and database operations using ADO.NET**.
+The project demonstrates secure authentication practices, OTP-based password reset, and real-world backend challenges such as API hosting, database connectivity, SSL/TLS issues, and error handling.
 
-The application is designed for learning and practice purposes, focusing on **secure authentication logic** in a simple and understandable way.
+🚀 Features
+🔐 User Registration
 
----
+Prevents duplicate usernames
 
-## 🚀 Features
+Stores passwords using SHA256 hashing
 
-* 🔐 **User Registration**
+Saves user data securely in SQL Server
 
-  * Prevents duplicate usernames
-  * Stores passwords using **SHA256 hashing**
+🔑 User Login
 
-* 🔑 **User Login**
+Validates username and hashed password from the database
 
-  * Validates username and hashed password from database
+🔁 Forgot Password (OTP-Based)
 
-* 🔁 **Forgot Password Mechanism**
+Generates a 6-digit OTP
 
-  * Generates a **6-digit OTP**
-  * Stores OTP with timestamp and usage status
-  * Sends OTP to registered email using **SMTP (Gmail)**
-  * Verifies OTP before allowing password reset
+Stores OTP with:
 
-* ⏱ **OTP Security**
+Creation time
 
-  * OTP has expiry time
-  * OTP can be used only once (`IsUsed` flag)
+Expiry time
 
-* 🗄 **Database Integration**
+One-time usage flag (IsUsed)
 
-  * SQL Server LocalDB
-  * Uses **ADO.NET** (`SqlConnection`, `SqlCommand`)
+Allows password reset only after successful OTP verification
 
----
+🌐 New Enhancements (Added Later)
+✅ OTP Web APIs
 
-## 🧠 Technologies Used
+Instead of handling OTP only inside the console application, separate Web APIs were created for better scalability and testing.
 
-* C# (.NET Framework)
-* SQL Server (LocalDB)
-* ADO.NET
-* SHA256 Password Hashing
-* SMTP (Gmail App Password)
+🔹 OTP Generation API
 
----
+Generates OTP
 
-## 🗂 Project Structure
+Stores OTP in the database
 
-```
+Sends OTP to the registered email
+
+🔹 OTP Verification API
+
+Validates OTP
+
+Checks expiry time
+
+Ensures OTP is used only once
+
+✅ Hosting
+
+Hosted Web API on MonsterASP
+
+Hosted SQL Server database on MonsterASP
+
+Faced and resolved real hosting-related issues such as database connectivity and service unavailability
+
+✅ API Testing
+
+Used Postman to:
+
+Test OTP generation API
+
+Test OTP verification API
+
+Validate request/response flow and error handling
+
+🧠 Technologies Used
+
+C# (.NET Framework)
+
+ASP.NET Web API
+
+SQL Server (LocalDB → Hosted SQL Server)
+
+ADO.NET (SqlConnection, SqlCommand)
+
+SHA256 Password Hashing
+
+SMTP (Gmail App Password)
+
+Postman (API Testing)
+
+🗂 Project Structure
 RegistrationLogin
 │
 ├── Services
 │   ├── UserService.cs        // Registration & Login logic
-│   ├── PasswordService.cs    // Hashing & reset password logic
+│   ├── PasswordService.cs    // Hashing & password reset logic
 │   └── EmailService.cs       // OTP email sending
 │
-├── Program.cs                // Main console flow
-├── App.config                // Connection string
+├── WebApi
+│   ├── OTPController.cs      // OTP generation & verification APIs
+│
+├── Program.cs                // Console application flow
+├── App.config                // Database connection string
 └── README.md
-```
 
----
+⚠️ Challenges Faced & Solutions
+❌ Database Connection Errors
 
-## 🔒 Security Concepts Implemented
+Problems:
 
-* Password hashing (SHA256)
-* OTP verification with expiry
-* One-time OTP usage
-* Secure email authentication using Gmail App Password
+SQL connection failures after hosting
 
----
+Named Pipes Provider, error: 40
 
-## 🎯 Learning Outcomes
+HTTP 503 Service Unavailable
 
-* Understanding authentication flow
-* Implementing secure password storage
-* Working with SQL Server using ADO.NET
-* Using SMTP for email services
-* Structuring a console application with service layers
+Solutions:
 
----
+Learned shared hosting limitations
 
-## 📌 Note
+Fixed connection strings
 
-This project is intended for **learning and practice**. For production use, advanced security measures like **salted hashing, token-based authentication, and encryption** should be applied.
+Understood SQL Server remote access configuration
 
----
+❌ SSL / TLS Authentication Errors
 
-## 👤 Author
+Problem:
 
-**Tangudu Raja**
+Authentication failed because the remote party closed the transport stream
+
+Solution:
+
+Configured proper TLS support
+
+Ensured HTTPS requests were handled correctly
+
+❌ OTP API Internal Server Errors (500)
+
+Problem:
+
+API returned 500 Internal Server Error during OTP generation
+
+Solution:
+
+Added proper exception handling
+
+Debugged APIs using Postman
+
+Verified database tables and SMTP configuration
+
+❌ Free Hosting Limitations
+
+Problems:
+
+Database creation failed with HTTP 503
+
+SQL services temporarily unavailable
+
+Solutions:
+
+Understood free hosting limitations
+
+Used retry strategy and off-peak testing
+
+Tested logic locally before deployment
+
+🔒 Security Concepts Implemented
+
+SHA256 password hashing
+
+OTP expiry validation
+
+One-time OTP usage
+
+Secure email authentication using Gmail App Password
+
+Separation of concerns using service layers
+
+API-level validation
+
+🎯 Learning Outcomes
+
+Built a complete authentication system from scratch
+
+Converted console-based logic into Web APIs
+
+Gained experience with real-world hosting challenges
+
+Improved debugging skills for production-level errors
+
+Learned API testing using Postman
+
+Strengthened understanding of backend security concepts
+
+📌 Note
+
+This project is built for learning and practice purposes.
+
+For production-level systems:
+
+Use salted hashing (bcrypt / PBKDF2)
+
+Implement JWT or OAuth-based authentication
+
+Use secure secrets management
+
+Prefer paid or dedicated cloud hosting
+
+👤 Author
+
+Tangudu Raja
 Computer Science & Engineering Student
-
----
 
 ⭐ If you found this project useful, feel free to star the repository!

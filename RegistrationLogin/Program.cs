@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -10,9 +11,15 @@ namespace RegistrationLogin
 {
     internal class Program
     {
-        static void Main(string[] args)
+        static async Task Main(string[] args)
         {
-            Console.WriteLine("Wellcome To Registration Page:");
+            ServicePointManager.SecurityProtocol =
+            SecurityProtocolType.Tls12;
+
+            ServicePointManager.Expect100Continue = true;
+            ServicePointManager.UseNagleAlgorithm = false;
+
+
 
             while (true)
             {
@@ -35,7 +42,7 @@ namespace RegistrationLogin
                         Login.UserLogin();
                         break;
                     case 3:
-                        ForgetPassWord.PasswordResetOfUser();
+                        await ForgetPassWord.PasswordResetOfUser();
                         break;
                     case 4:
                         Console.WriteLine("Thank You For Using Our Application..");
